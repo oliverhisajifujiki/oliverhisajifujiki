@@ -29,7 +29,7 @@
       <details class="dropdown">
         <summary>Description</summary>
         <p>
-          The Metropolis–Hastings algorithm is a Markov Chain Monte Carlo (MCMC)
+          The Metropolis–Hastings algorithm is a <a href = "mcmc.html" target="_blank">Markov Chain Monte Carlo (MCMC)</a>
           method used to generate samples from complex probability distributions
           where direct sampling is difficult. It works by proposing new points
           based on a jump distribution and accepting or rejecting them according
@@ -47,13 +47,71 @@
       </details>
 
       <!-- Second dropdown: Algorithm -->
-      <details class="dropdown">
+      <details class="dropdown" open>
         <summary>Algorithm</summary>
         <figure>
           <img src="images/MHAlg.png"
                alt="Metropolis–Hastings Algorithm"
                width="600">
         </figure>
+
+        <h3>Algorithm Details</h3>
+
+          <p>
+            The Metropolis–Hastings algorithm constructs a Markov chain whose equilibrium distribution
+            matches a chosen <em>target probability function</em> <code>p(θ)</code>. Each iteration proposes
+            a new candidate state and decides whether to move there or remain at the current position.
+          </p>
+
+          <h4>1. Probability Function p(θ)</h4>
+          <p>
+            The <strong>probability function</strong> <code>p(θ)</code> defines the landscape that the algorithm
+            explores. It may represent a likelihood, posterior, or any function proportional to them.
+            The algorithm does not require <code>p(θ)</code> to be normalized—only ratios such as
+            <code>p(θ′) / p(θ)</code> are needed. This makes the method especially useful in
+            Bayesian inference, where normalizing constants are often intractable.
+          </p>
+
+          <h4>2. Jumping Function J(θ′ | θ)</h4>
+          <p>
+            The <strong>jumping function</strong> (or <strong>proposal distribution</strong>)
+            <code>J(θ′ | θ)</code> determines how new candidate points are generated from the current state.
+            A common choice is a symmetric Gaussian centered at the current point, for example
+            <code>θ′ = θ + Normal(0, σ²)</code>, but any distribution can be used.
+          </p>
+          <p>
+            The form of <code>J</code> controls how efficiently the algorithm explores the space:
+            smaller jumps produce higher acceptance but slower movement,
+            while larger jumps cover ground faster but are rejected more frequently.
+          </p>
+
+          <h4>3. Acceptance Probability</h4>
+          <p>
+            The <strong>acceptance probability</strong> determines whether a proposed move is accepted or rejected.
+            It is given by <em>line 2 of the while-loop shown above</em>, where the ratio of probabilities and
+            proposal terms decides if the chain moves to the new point <code>θ′</code> or remains at <code>θ</code>.
+          </p>
+
+          <h4>4. Convergence</h4>
+          <p>
+            <strong>Convergence</strong> refers to the stage when the distribution of visited states
+            becomes indistinguishable from the true target distribution <code>p(θ)</code>.
+            At this point, samples can be treated as representative draws from that distribution.
+          </p>
+          <p>
+            In practice, convergence is evaluated through diagnostics such as effective sample size,
+            autocorrelation, or the stability of running means. Because the early part of the chain
+            is often still adapting, a <em>burn-in</em> period is usually discarded before analysis.
+          </p>
+
+          <h4>Summary</h4>
+          <p>
+            Together, the probability function <code>p(θ)</code>, the jumping function <code>J(θ′ | θ)</code>,
+            and the acceptance rule (line 2) form the foundation of the Metropolis–Hastings algorithm.
+            These components create a stochastic process that not only identifies high-probability regions,
+            but also characterizes the entire landscape of uncertainty surrounding them.
+          </p>
+
       </details>
 
       <!-- Third dropdown: Performance -->
